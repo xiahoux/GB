@@ -147,7 +147,7 @@ public class Main {
                 }
                 arr[arr.length - 1] = arrDrop;
             }
-        }
+        }else System.out.println("На ноль сдвигать нельзя :ъ");
         return arr;
     }
 }
