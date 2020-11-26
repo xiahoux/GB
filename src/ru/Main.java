@@ -1,5 +1,6 @@
 package ru;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -14,17 +15,18 @@ public class Main {
         System.out.println("Выбор задания зациклен, так что можно запускать один и тот же метод сколько угодно раз подряд");
         System.out.println("без перезапуска программы.");
         System.out.println("Меню заданий:");
-        System.out.println("3. Метод вычисления выражения a * (b + (c / d))");
-        System.out.println("4. Метод, проверяющий, попадает ли сумма двух чисел, данных на вход, в диапазон 10-20.");
-        System.out.println("5. Метод, проверяющий знак числа и печатающий результат в консоль.");
-        System.out.println("6. Метод, возвращающий true, если введённое число отрицательное.");
-        System.out.println("7. Метод, принимающий строку с именем и печатающий в консоль приветствие.");
-        System.out.println("*8. Метод, определяющий, является ли год високосным.");
+        System.out.println("1. Задать целочисленный массив, состоящий из элементов 0 и 1. Например: [ 1, 1, 0, 0, 1, 0, 1, 1, 0, 0 ]. С помощью цикла и условия заменить 0 на 1, 1 на 0;");
+        System.out.println("2. Задать пустой целочисленный массив размером 8. С помощью цикла заполнить его значениями 0 3 6 9 12 15 18 21;");
+        System.out.println("3. Задать массив [ 1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1 ] пройти по нему циклом, и числа меньшие 6 умножить на 2;");
+        System.out.println("4. Создать квадратный двумерный целочисленный массив (количество строк и столбцов одинаковое), и с помощью цикла(-ов) заполнить его диагональные элементы единицами;");
+        System.out.println("5. ** Задать одномерный массив и найти в нем минимальный и максимальный элементы (без помощи интернета)");
+        System.out.println("6. ** Написать метод, в который передается не пустой одномерный целочисленный массив, метод должен вернуть true, если в массиве есть место, в котором сумма левой и правой части массива равны;");
+        System.out.println("7. **** Написать метод, которому на вход подается одномерный массив и число n (может быть положительным, или отрицательным), при этом метод должен сместить все элементымассива на n позиций. Для усложнения задачи нельзя пользоваться вспомогательными массивами;");
         System.out.println("0. Выход.");
 
 
         while (true) { //цикл для выбора задания
-            System.out.println("Введи номер задания:");
+            System.out.print("Введи номер задания:");
             yourChoiсe = scanner.nextInt();
             exit = dataInput(yourChoiсe);
             if(exit == 0) break;
@@ -37,90 +39,115 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        if(yourChoiсe == 3){ //ввод данных для задания №3
+        if (yourChoiсe == 1) {
+            int[] arr = {1, 0, 0, 1, 1, 0, 1, 0, 0, 1};
+            System.out.println("Изначальный массив: " + Arrays.toString(arr));
+            for (int i = 0; i < arr.length; i++) {
+                if (arr[i] == 1) arr[i] = 0;
+                else arr[i] = 1;
+            }
+            System.out.println("Получившийся массив: " + Arrays.toString(arr));
 
-            System.out.println("Введите а:");
-            double a = scanner.nextDouble();
-            System.out.println("Введите b:");
-            double b = scanner.nextDouble();
-            System.out.println("Введите с:");
-            double c = scanner.nextDouble();
-            System.out.println("Введите d:");
-            double d = scanner.nextDouble();
+        } else if(yourChoiсe == 2){
+            final int SIZE = 8;
+            int[] arr = new int[SIZE];
+            for(int i = 0; i < SIZE; i++){
+                if(i > 0) arr[i] = arr[i-1] + 3;
+                else arr[i] = i;
+                System.out.print(arr[i] + " ");
+            }
+            System.out.println();
+        } else if(yourChoiсe == 3){
+            int[] arr = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
+            for(int i = 0; i < arr.length; i++){
+                if(arr[i] < 6) arr[i] = arr[i] * 2;
+                System.out.print(arr[i] + " ");
+            }
+            System.out.println();
+        }else if(yourChoiсe == 4){
+            final int SIZE = 10;
+            int[][] arr = new int[SIZE][SIZE];
+            for(int i = 0; i < SIZE; i++){
+                for(int j = 0; j < SIZE; j++){
+                    if(j == i || j + i == SIZE - 1) arr[i][j] = 1;
+                    else arr[i][j] = 0;
+                    System.out.printf("%2d ", arr[i][j]);
+                }
+                System.out.println();
+            }
+        }else if(yourChoiсe == 5){
+            final int SIZE = 20;
+            int[] arr = new int[SIZE];
+            int min = 100;
+            int max = 0;
+            for(int i = 0; i < SIZE; i++){
+                arr[i] = (int)(Math.random() * 100);
+                System.out.print(arr[i] + " ");
+                if(arr[i] < min) min = arr[i];
+                if(arr[i] > max) max = arr[i];
+            }
+            System.out.println();
+            System.out.println("Максимум равен: " + max);
+            System.out.println("Минимум равен: " + min);
+        }else if(yourChoiсe == 6){
+            final int SIZE = 5;
+            int[] arr = new int[SIZE];
+            for(int i = 0; i < SIZE; i++){
+                arr[i] = (int)(Math.random() * 10);
+                System.out.print(arr[i] + " ");
+            }
+            boolean result = checkBalance(arr);
+            if(result) System.out.println("Баланс найден!");
+            else System.out.println("Баланс не найден.");
+        }else if(yourChoiсe == 7){
+            final int SIZE = 10;
+            int[] arr = new int[SIZE];
+            for(int i = 0; i < arr.length; i++){
+                arr[i] = (int)(Math.random() * 10);
+                System.out.print(arr[i] + " ");
+            }
+            System.out.println();
+            System.out.print("Введите n: ");
+            int n = scanner.nextInt();
+            System.out.println(Arrays.toString(arr) + " - исходный массив");
+            arr = shift(arr, n);
+            System.out.println(Arrays.toString(arr) + " - массив после сдвига");
 
-            double result = homeWork3(a, b, c, d); //вызов метода задания №3
-            System.out.println("Результат выражения равен: " + result);
-
-        }else if(yourChoiсe == 4){ //ввод данных для задания №4
-
-            System.out.println("Введите а:");
-            int a = scanner.nextInt();
-            System.out.println("Введите b:");
-            int b = scanner.nextInt();
-
-            boolean result = homeWork4(a, b); //вызов метода задания №4
-            if(result) System.out.println("Сумма в диапазоне.");
-            else System.out.println("Сумма вне диапазона.");
-
-        }else if(yourChoiсe == 5){ //ввод данных для задания №5
-
-            System.out.println("Введите число:");
-            int a = scanner.nextInt();
-
-            homeWork5(a); //вызов метода задания №5
-
-
-        }else if(yourChoiсe == 6){ //ввод данных для задания №6
-
-            System.out.println("Введите число:");
-            int a = scanner.nextInt();
-
-            boolean result = homeWork6(a); //вызов метода задания №6
-            if(result) System.out.println("Число отрицательное.");
-            else System.out.println("Число положительное.");
-
-        }else if(yourChoiсe == 7){ //ввод данных для задания №7
-
-            System.out.println("Введите Имя:");
-            String name = scanner.next();
-
-            homeWork7(name); //вызов метода задания №7
-
-        }else if(yourChoiсe == 8){ //ввод данных для задания №*8
-
-            System.out.println("Введите год:");
-            int year = scanner.nextInt();
-
-            homeWork8(year);
         }else if(yourChoiсe == 0) return 0;
         return 1;
+
     }
-
-
-
-    private static double homeWork3(double a, double b, double c, double d) { //метод задания №3
-        return a * (b + (c / d));
+    private static boolean checkBalance(int[] arr) {
+        int sum1 = 0;
+        int sum2 = 0;
+        for(int i = 0; i < arr.length-1; i++){
+            sum1 += arr[i];
+            for(int j = i+1; j < arr.length; j++){
+                sum2 += arr[j];
+            }
+            if(sum1 == sum2) break;
+            sum2 = 0;
+        }
+        return sum1 == sum2;
     }
-
-    private static boolean homeWork4(int a, int b) { //метод задания №4
-        return a + b >=10 && a + b <= 20;
-    }
-
-    private static void homeWork5(int a) { //метода задания №5
-        if(a < 0) System.out.println("Число отрицательное.");
-        else System.out.println("Число положительное.");
-    }
-
-    private static boolean homeWork6(int a) { //метод задания №6
-        return a < 0;
-    }
-
-    private static void homeWork7(String name) { //метод задания №7
-        System.out.println("Привет, " + name + "!");
-    }
-
-    private static void homeWork8(int year) { //метод задания №8
-        if(year % 4 == 0 && (year % 100 != 0 ^ year % 400 == 0)) System.out.println("Год високосный.");
-        else System.out.println("Год невисокосный.");
+    private static int[] shift(int[] arr, int n) {
+        if(n > 0){
+            for(int i = 1; i <= n; i++) {
+                int arrDrop = arr[arr.length-1];
+                for (int j = arr.length-1; j > 0; j--) {
+                    arr[j] = arr[j - 1];
+                }
+                arr[0] = arrDrop;
+            }
+        }else if(n < 0){
+            for(int i = -1; i >= n; i--){
+                int arrDrop = arr[0];
+                for (int j = 0; j < arr.length-1; j++){
+                    arr[j] = arr[j + 1];
+                }
+                arr[arr.length - 1] = arrDrop;
+            }
+        }
+        return arr;
     }
 }
